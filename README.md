@@ -10,6 +10,16 @@
     - Read from file
 - save_students
     - Save to file
+- printer_students
+    - Display students in the table
+- print_student
+    - Get the student out of the dictionary, either directly or through the console
+- add_student
+    - Add a student either directly or through the console
+- edit_student
+    - Edit a student either directly or through the console
+- delet_student
+    - Remove a student from a dictionary, either directly or through the console
 
 ---
 
