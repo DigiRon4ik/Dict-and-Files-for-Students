@@ -7,11 +7,11 @@ def load_students(file: str) -> dict:
     with open(file, 'r', encoding='utf-8') as f:
         for line in f.readlines():
             l = line.rstrip().split(', ')
-            std[std_key] = {'ФИО': l[0],
-                            'Возраст': l[1],
-                            'Группа': l[2],
-                            'Специальность': l[3],
-                            'Квалификация': l[4]}
+            std[std_key] = {'Full Name': l[0],
+                            'Age': l[1],
+                            'Group': l[2],
+                            'Speciality': l[3],
+                            'Qualification': l[4]}
             std_key += 1
     return std
 
@@ -35,12 +35,12 @@ def printer_students(students: dict):
         '-'*9 + '+' + '-'*8 + '+' + '-'*27 + '+' + '-'*14 + '+'
     print(str_equals)
     print('| {:>2} | {:^35} | {:^7} | {:^6} | {:^25} | {:^12} |'.format(
-        '№', 'ФИО', 'Возраст', 'Группа', 'Специальность', 'Квалификация'))
+        '№', *students[1].keys()))
     print(str_equals)
 
     for k, v in students.items():
         print('| {:>2} | {:<35} | {:>7} | {:>6} | {:<25} | {:^12} |'.format(
-            k, v['ФИО'], v['Возраст'], v['Группа'], v['Специальность'], v['Квалификация']))
+            k, *v.values()))
         print(str_underline)
 
 
@@ -64,11 +64,12 @@ def add_student(students: dict, new_student: str = None):
     else:
         new_student = new_student.split(', ')
 
-    students[len(students) + 1] = {'ФИО': new_student[0],
-                                   'Возраст': new_student[1],
-                                   'Группа': new_student[2],
-                                   'Специальность': new_student[3],
-                                   'Квалификация': new_student[4]}
+    std_keys = students[1].keys()
+    new_index, last_index = 0, len(students) + 1
+    students[last_index] = {}
+    for i in std_keys:
+        students[last_index][i] = new_student[new_index]
+        new_index += 1
 
 
 def edit_student(students: dict, edit_student: str = None, number_student: int = None):
@@ -85,11 +86,10 @@ def edit_student(students: dict, edit_student: str = None, number_student: int =
         edit_student = input('Вводите данные для редактирования через ", ":\n\tНа -> ')
 
     edit_student = edit_student.split(', ')
-    students[number_student] = {'ФИО': edit_student[0],
-                                'Возраст': edit_student[1],
-                                'Группа': edit_student[2],
-                                'Специальность': edit_student[3],
-                                'Квалификация': edit_student[4]}
+    new_index, std_keys = 0, students[1].keys()
+    for i in std_keys:
+        students[number_student][i] = edit_student[new_index]
+        new_index += 1
 
 
 def delet_student(students: dict, number_student: int = None):
