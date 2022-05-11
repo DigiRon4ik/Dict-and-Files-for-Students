@@ -1,3 +1,6 @@
+import os.path
+
+
 def load_students(file: str) -> dict:
     """Загрузить студентов из файла в словарь.\n
     file: Путь к файлу. (students.txt)"""
@@ -8,6 +11,10 @@ def load_students(file: str) -> dict:
     std = { 0: {fullname: None, age: None, group: None,
                 speciality: None, qualification: None} }
     std_key = 1
+    if not os.path.isfile(file):
+        with open(file, 'w', encoding='utf-8') as f:
+            pass
+    
     with open(file, 'r', encoding='utf-8') as f:
         for line in f.readlines():
             l = line.rstrip().split(', ')
